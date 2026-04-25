@@ -79,7 +79,7 @@ function Landing() {
           </div>
 
           <div
-            className={`${darkmode ? "bg-[#2e2e2e]" : "bg-gray-200"} p-1.5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] group transition-all focus-within:ring-2 focus-within:ring-[#1ce0af]/20`}
+            className={`${darkmode ? "bg-[#252525]" : "bg-gray-200"} p-1.5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] group transition-all focus-within:ring-2 focus-within:ring-[#1ce0af]/20`}
           >
             <div className="relative flex items-center">
               <div className="absolute left-4 text-gray-300 group-focus-within:text-[#1ce0af] transition-colors">
@@ -91,7 +91,7 @@ function Landing() {
                 value={businessIdea}
                 onChange={(e) => setBusinessIdea(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleAnalyze()}
-                className={`${darkmode ? "bg-[#3e3e3e] text-gray-200 " : "bg-white text-gray-900"} w-full pl-12 pr-36 py-4 bg-transparent rounded-xl focus:outline-none text-lg placeholder:text-gray-300`}
+                className={`${darkmode ? "bg-[#2e2e2e] text-gray-200 " : "bg-white text-gray-900"} w-full pl-12 pr-36 py-4 bg-transparent rounded-xl focus:outline-none text-lg placeholder:text-gray-300`}
               />
               <div className="absolute right-1.5">
                 <button
