@@ -1,28 +1,30 @@
-import type { Express, Request, Response } from "express";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { analyzeBusiness } from "./GroqService.ts";
+import { analyzeBusiness } from "./GroqService.js";
 
 dotenv.config();
 
-const app: Express = express();
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/analyze-business", async (req: Request, res: Response) => {
-  try {
-    const { businessIdea, location } = req.body;
+app.get("/health", (req, res) => {
+  res.json({ status: "Server is running" });
+});
 
-    if (!businessIdea || !location) {
-      res.status(400).json({ error: "Missing businessIdea or location" });
+app.post("/api/analyze-business", async (req, res) => {
+  try {
+    const { businessIdea } = req.body;
+
+    if (!businessIdea) {
+      res.status(400).json({ error: "Missing businessIdea" });
       return;
     }
 
-    const result = await analyzeBusiness(businessIdea, location);
-
+    const result = await analyzeBusiness(businessIdea);
     res.json({ success: true, data: result });
   } catch (error) {
     console.error(error);
@@ -30,10 +32,10 @@ app.post("/api/analyze-business", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/health", (req: Request, res: Response) => {
-  res.json({ status: "Server is running" });
+const server = app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+server.on("error", (err) => {
+  console.error("Server error:", err);
 });
