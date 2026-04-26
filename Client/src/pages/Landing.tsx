@@ -16,19 +16,17 @@ function Landing() {
 
   const handleAnalyze = async () => {
     if (!businessIdea.trim()) return;
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/analyze-business",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            businessIdea: businessIdea.trim(),
-          }),
-        },
-      );
+      const response = await fetch(`${BACKEND_URL}/api/analyze-business`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessIdea: businessIdea.trim(),
+        }),
+      });
 
       const data = await response.json();
       setResults(data.data);
