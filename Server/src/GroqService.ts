@@ -34,7 +34,7 @@ export const analyzeBusiness = async (
 ): Promise<BusinessPlan> => {
   try {
     const groq = new Groq({
-      apiKey: process.env.GROQ_API_KEY,
+      apiKey: process.env.GROQ_ANALYSIS_API_KEY,
     });
 
     const message = await groq.chat.completions.create({
@@ -78,6 +78,53 @@ export const analyzeBusiness = async (
     const cleanedResponse = response.replace(/```json|```/g, "").trim();
     const plan: BusinessPlan = JSON.parse(cleanedResponse);
     return plan;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const chatbot = async (
+  businessIdea: string,
+  context: string,
+  conversationHistory: Array<{ role: string; content: string }>,
+): Promise<string> => {
+  try {
+    const groq = new Groq({
+      apiKey: process.env.GROQ_CHATBOT_API_KEY,
+    });
+
+    const messages: any[] = [
+      {
+        role: "system",
+        content: `You are an expert business analyst chatbot. Answer questions about the user's business analysis.
+        
+        Original business analysis context:
+        ${context}
+        
+        Rules:
+        - Answer based on the provided business analysis
+        - Be concise and helpful
+        - Remember previous conversation context
+        - If you don't know, say so`,
+      },
+      ...conversationHistory.map((msg) => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content,
+      })),
+      {
+        role: "user",
+        content: businessIdea,
+      },
+    ];
+
+    const message = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 1000,
+      messages,
+    });
+
+    const response = message.choices[0]?.message.content || "No response";
+    return response;
   } catch (error) {
     throw error;
   }

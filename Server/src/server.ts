@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { analyzeBusiness } from "./GroqService.js";
+import { analyzeBusiness, chatbot } from "./GroqService.js";
 
 dotenv.config();
 
@@ -25,6 +25,23 @@ app.post("/api/analyze-business", async (req, res) => {
     }
 
     const result = await analyzeBusiness(businessIdea);
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/chatbot", async (req, res) => {
+  try {
+    const { businessIdea, context, conversationHistory } = req.body;
+
+    if (!businessIdea || !context) {
+      res.status(400).json({ error: "Missing businessIdea or Context" });
+      return;
+    }
+
+    const result = await chatbot(businessIdea, context, conversationHistory);
     res.json({ success: true, data: result });
   } catch (error) {
     console.error(error);
