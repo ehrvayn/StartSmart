@@ -316,7 +316,7 @@ function Results({ data, onBack }: ResultsProps) {
 
         <button
           onClick={() => {
-            setDarkmode(!darkmode);
+            setDarkmode(false);
             handleExportPDF();
           }}
           className={`w-full border-2 border-blue-500 text-blue-500 font-bold py-3 sm:py-4 rounded-lg hover:bg-blue-500 hover:text-white transition-all mb-12 sm:mb-20 text-sm sm:text-base`}
