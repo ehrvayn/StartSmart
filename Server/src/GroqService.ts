@@ -105,6 +105,8 @@ export const chatbot = async (
         - Answer based on the provided business analysis
         - Be concise and helpful
         - Remember previous conversation context
+        - Use Peso as primary money type but if user specifically say dollor like "$10000", then use dollar but if not, use peso but if user say a money range without specifiying what money type it is just plain number like (my budget is 10000...), 
+        then say "i assume you mean 10000 pesos..) then continue.
         - If you don't know, say so`,
       },
       ...conversationHistory.map((msg) => ({
