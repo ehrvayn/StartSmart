@@ -118,7 +118,7 @@ function Chatbot({ onClose, businessData }: ChatbotProps) {
           >
             <div
               className={`flex items-start gap-2 max-w-[90%] sm:max-w-[85%] ${
-                msg.role === "user" ? "flex-row-reverse" : "flex-row"
+                msg.role === "user" ? "flex-row-reverse" : "sm:flex-row flex-col"
               }`}
             >
               {msg.role !== "user" && (

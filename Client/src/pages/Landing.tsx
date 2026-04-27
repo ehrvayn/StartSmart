@@ -28,12 +28,22 @@ function Landing() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
+
+      if (!data.data) {
+        throw new Error("No data received from server");
+      }
+
       setResults(data.data);
       localStorage.setItem("savedAnalysis", JSON.stringify(data.data));
       setBusinessIdea("");
     } catch (error) {
       console.error("Error:", error);
+      alert("Failed to analyze. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -45,7 +55,7 @@ function Landing() {
 
   return (
     <div
-      className={`${darkmode ? "bg-[#1e1e1e]" : "bg-[#fafafa]"} min-h-screen w-screen overflow-x-hidden flex flex-col font-sans antialiased`}
+      className={`${darkmode ? "bg-[#1e1e1e]" : "bg-[#fafafa]"} h-full w-full overflow-x-hidden flex flex-col font-sans antialiased`}
     >
       <main className="flex-1 flex items-center justify-center px-3 sm:px-4 md:px-6 py-8 sm:py-12 relative">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -85,11 +95,11 @@ function Landing() {
               </div>
               <input
                 type="text"
-                placeholder="e.g, Local barber shop, School coffee shop"
+                placeholder="ex: A local printing station near school"
                 value={businessIdea}
                 onChange={(e) => setBusinessIdea(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleAnalyze()}
-                className={`${darkmode ? "bg-[#181818] text-gray-200" : "bg-white text-gray-900"} w-full pl-9 sm:pl-12 pr-24 sm:pr-36 py-2.5 sm:py-4 bg-transparent rounded-lg sm:rounded-xl focus:outline-none text-sm sm:text-lg placeholder:text-gray-300`}
+                className={`${darkmode ? "bg-[#161616] text-gray-200" : "bg-white text-gray-900"} w-full pl-9 sm:pl-12 pr-24 sm:pr-36 py-2.5 sm:py-4 bg-transparent rounded-lg sm:rounded-xl focus:outline-none text-sm sm:text-lg placeholder:text-gray-300`}
               />
               <div className="absolute right-1">
                 <button

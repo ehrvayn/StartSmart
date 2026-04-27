@@ -33,170 +33,145 @@ function Results({ data, onBack }: ResultsProps) {
 
   return (
     <div className={`flex-1 overflow-auto ${bgColor} relative`}>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-16 space-y-16 sm:space-y-24">
         <button
           onClick={() => {
             onBack();
             localStorage.removeItem("savedAnalysis");
             localStorage.removeItem("savedConversation");
           }}
-          className={`mb-4 sm:mb-16 text-xs sm:text-sm uppercase tracking-widest font-bold ${
+          className={`text-xs sm:text-sm uppercase tracking-widest font-bold ${
             darkmode
-              ? "text-blue-500 hover:text-blue-400"
-              : "text-blue-500 hover:text-blue-700"
+              ? "text-blue-400 hover:text-blue-300"
+              : "text-blue-600 hover:text-blue-700"
           }`}
         >
-          ← clear & return?
+          ← clear & return
         </button>
-        <div id="pdf-content">
-          <div className="mb-12 sm:mb-20">
+
+        <div id="pdf-content" className="space-y-16 sm:space-y-24">
+          {/* Intro */}
+          <section className="space-y-4 sm:space-y-6">
             <h1
-              className={`text-3xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6 ${textColor}`}
+              className={`text-4xl sm:text-5xl md:text-6xl font-black leading-tight ${textColor}`}
             >
               Your Business Idea
             </h1>
             <p
-              className={`text-sm sm:text-base md:text-lg ${subtleText} mb-8 sm:mb-12`}
-            >
-              Comprehensive viability analysis
-            </p>
-            <p
-              className={`text-base sm:text-lg md:text-xl text-justify leading-relaxed max-w-3xl ${subtleText}`}
+              className={`text-sm sm:text-base text-justify leading-relaxed max-w-3xl ${subtleText}`}
             >
               {data.feedback}
             </p>
-          </div>
+          </section>
 
-          <div
-            className={`border-t ${divider} pt-8 sm:pt-12 pb-8 sm:pb-12 mb-12 sm:mb-20`}
-          >
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
-              <div>
+          {/* Key Metrics Grid */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16`}>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              <div className="space-y-2">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Viability Score
                 </p>
-                <p
-                  className={`text-2xl sm:text-3xl md:text-4xl font-black ${textColor}`}
-                >
+                <p className={`text-3xl sm:text-4xl font-black ${textColor}`}>
                   {data.viabilityScore}/10
                 </p>
               </div>
-              <div>
+              <div className="space-y-2">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
-                  Investment
+                  Initial Investment
                 </p>
-                <p
-                  className={`text-lg sm:text-xl md:text-2xl font-black ${textColor}`}
-                >
+                <p className={`text-2xl sm:text-3xl font-black ${textColor}`}>
                   ₱{(data.startupCosts || 0).toLocaleString()}
                 </p>
               </div>
-              <div>
+              <div className="space-y-2">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Timeline
                 </p>
-                <p
-                  className={`text-lg sm:text-xl md:text-2xl font-black ${textColor}`}
-                >
+                <p className={`text-2xl sm:text-3xl font-black ${textColor}`}>
                   {data.timeline}
                 </p>
               </div>
-              <div>
+              <div className="space-y-2">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Break Even
                 </p>
-                <p
-                  className={`text-lg sm:text-xl md:text-2xl font-black ${textColor}`}
-                >
+                <p className={`text-2xl sm:text-3xl font-black ${textColor}`}>
                   {data.profitabilityTimeline}
                 </p>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={`border-t ${divider} pt-12 sm:pt-20 mb-12 sm:mb-20`}>
-            <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
-            >
-              Investment Breakdown
-            </h2>
-            <div
-              className={`text-4xl sm:text-5xl md:text-6xl font-black mb-6 sm:mb-8 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent`}
-            >
-              ₱{(data.startupCosts || 0).toLocaleString()}
+          {/* Investment Breakdown */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16 space-y-8`}>
+            <div className="space-y-3">
+              <h2 className={`text-3xl sm:text-4xl font-black ${textColor}`}>
+                Investment Breakdown
+              </h2>
+              <p className={`text-2xl sm:text-3xl font-black text-blue-600`}>
+                ₱{(data.startupCosts || 0).toLocaleString()}
+              </p>
             </div>
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
               {Object.entries(data.startupCostsBreakdown || {}).map(
-                ([key, value]: [string, any]) => {
-                  return (
-                    <div key={key}>
-                      <div className="flex justify-between mb-2">
-                        <span
-                          className={`text-xs sm:text-sm uppercase tracking-wide font-bold ${textColor}`}
-                        >
-                          {key
-                            .replace(/([A-Z])/g, " $1")
-                            .replace(/^./, (str) => str.toUpperCase())
-                            .trim()}
-                        </span>
-                        <span
-                          className={`text-xs sm:text-sm font-bold ${textColor}`}
-                        >
-                          ₱{(value || 0).toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                },
+                ([key, value]: [string, any]) => (
+                  <div
+                    key={key}
+                    className="flex justify-between items-center pb-3 border-b border-gray-300"
+                  >
+                    <span
+                      className={`text-sm uppercase tracking-wide font-semibold ${textColor}`}
+                    >
+                      {key
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())
+                        .trim()}
+                    </span>
+                    <span className={`text-sm font-bold ${textColor}`}>
+                      ₱{(value || 0).toLocaleString()}
+                    </span>
+                  </div>
+                ),
               )}
             </div>
-          </div>
+          </section>
 
-          <div className={`border-t ${divider} pt-12 sm:pt-20 mb-12 sm:mb-20`}>
-            <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
-            >
+          {/* Timeline */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16 space-y-10`}>
+            <h2 className={`text-3xl sm:text-4xl font-black ${textColor}`}>
               Timeline
             </h2>
-            <div
-              className={`text-3xl sm:text-4xl md:text-5xl font-black mb-12 sm:mb-16 ${darkmode ? "text-gray-300" : "text-gray-800"}`}
-            >
-              {data.timeline}
-            </div>
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-8 sm:space-y-10">
               {(data.timelineBreakdown || []).map((phase: any, idx: number) => (
-                <div key={idx}>
-                  <div className="flex gap-4 sm:gap-6 mb-3 sm:mb-4">
+                <div key={idx} className="space-y-4">
+                  <div className="flex gap-4 sm:gap-6 items-start">
                     <div
-                      className={`text-2xl sm:text-3xl md:text-4xl font-black ${subtleText}`}
+                      className={`text-3xl sm:text-4xl font-black flex-shrink-0 ${subtleText}`}
                     >
-                      0{idx + 1}
+                      {String(idx + 1).padStart(2, "0")}
                     </div>
-                    <div>
+                    <div className="space-y-1">
                       <h3
-                        className={`text-lg sm:text-xl md:text-2xl font-black ${textColor}`}
+                        className={`text-lg sm:text-xl font-black ${textColor}`}
                       >
                         {phase.phase}
                       </h3>
-                      <p className={`text-xs sm:text-sm ${subtleText}`}>
+                      <p className={`text-sm ${subtleText}`}>
                         {phase.duration}
                       </p>
                     </div>
                   </div>
-                  <ul className="ml-12 sm:ml-24 space-y-1 sm:space-y-2">
+                  <ul className="ml-12 sm:ml-20 space-y-2">
                     {(phase.tasks || []).map((task: string, i: number) => (
-                      <li
-                        key={i}
-                        className={`text-xs sm:text-sm ${subtleText}`}
-                      >
+                      <li key={i} className={`text-sm ${subtleText}`}>
                         ▪ {task}
                       </li>
                     ))}
@@ -204,18 +179,19 @@ function Results({ data, onBack }: ResultsProps) {
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className={`border-t ${divider} pt-12 sm:pt-20 mb-12 sm:mb-20`}>
+          {/* Market & Risk */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16`}>
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
+              className={`text-3xl sm:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
             >
               Market & Risk
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-              <div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10">
+              <div className="space-y-3">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Market Demand
                 </p>
@@ -225,9 +201,9 @@ function Results({ data, onBack }: ResultsProps) {
                   {data.marketDemand}
                 </p>
               </div>
-              <div>
+              <div className="space-y-3">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Risk Level
                 </p>
@@ -243,9 +219,9 @@ function Results({ data, onBack }: ResultsProps) {
                   {data.riskLevel}
                 </p>
               </div>
-              <div>
+              <div className="space-y-3">
                 <p
-                  className={`text-xs uppercase tracking-widest font-bold ${subtleText} mb-2 sm:mb-3`}
+                  className={`text-xs uppercase tracking-widest font-bold ${subtleText}`}
                 >
                   Break Even
                 </p>
@@ -254,20 +230,21 @@ function Results({ data, onBack }: ResultsProps) {
                 </p>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={`border-t ${divider} pt-12 sm:pt-20 mb-12 sm:mb-20`}>
+          {/* Challenges */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16`}>
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
+              className={`text-3xl sm:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
             >
               Challenges
             </h2>
             <div className="space-y-6 sm:space-y-8">
               {(data.challenges || []).map((challenge: any, idx: number) => (
-                <div key={idx}>
-                  <div className="flex items-start gap-3 sm:gap-4 mb-2 sm:mb-3">
+                <div key={idx} className="space-y-2">
+                  <div className="flex items-start gap-3">
                     <div
-                      className={`w-2 h-2 mt-1 rounded-full flex-shrink-0 ${
+                      className={`w-2.5 h-2.5 mt-1.5 rounded-full flex-shrink-0 ${
                         challenge.severity === "high"
                           ? "bg-red-500"
                           : challenge.severity === "medium"
@@ -276,70 +253,67 @@ function Results({ data, onBack }: ResultsProps) {
                       }`}
                     />
                     <h3
-                      className={`text-base sm:text-lg md:text-xl font-bold ${textColor}`}
+                      className={`text-base sm:text-lg font-bold ${textColor}`}
                     >
                       {challenge.challenge}
                     </h3>
                   </div>
-                  <p
-                    className={`ml-5 sm:ml-6 text-sm sm:text-base ${subtleText}`}
-                  >
+                  <p className={`ml-5 text-sm sm:text-base ${subtleText}`}>
                     {challenge.solution}
                   </p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className={`border-t ${divider} pt-12 sm:pt-20 mb-12 sm:mb-20`}>
+          {/* Legal Checklist */}
+          <section className={`border-t ${divider} pt-12 sm:pt-16`}>
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
+              className={`text-3xl sm:text-4xl font-black mb-8 sm:mb-12 ${textColor}`}
             >
-              Legal Checklist
+              Legal Requirements
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {(data.legalRequirements || []).map(
                 (req: string, idx: number) => (
-                  <div key={idx} className="flex items-center gap-2 sm:gap-3">
-                    <div className="w-5 h-5 border-2 border-blue-500 rounded flex items-center justify-center flex-shrink-0">
-                      <span className="text-blue-500 text-xs">✓</span>
+                  <div key={idx} className="flex items-start gap-3">
+                    <div className="w-5 h-5 border-2 border-blue-500 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-blue-500 text-xs font-bold">✓</span>
                     </div>
-                    <span className={`text-xs sm:text-sm ${textColor}`}>
-                      {req}
-                    </span>
+                    <span className={`text-sm ${textColor}`}>{req}</span>
                   </div>
                 ),
               )}
             </div>
-          </div>
+          </section>
         </div>
 
+        {/* Export Button */}
         <button
           onClick={() => {
             setDarkmode(false);
             handleExportPDF();
           }}
-          className={`w-full border-2 border-blue-500 text-blue-500 font-bold py-3 sm:py-4 rounded-lg hover:bg-blue-500 hover:text-white transition-all mb-12 sm:mb-20 text-sm sm:text-base`}
+          className={`w-full border-2 border-blue-500 text-blue-500 font-bold py-3 sm:py-4 rounded-lg hover:bg-blue-500 hover:text-white transition-all text-sm sm:text-base`}
         >
           EXPORT PDF
         </button>
       </div>
+
       <Footer />
 
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(!chatOpen)}
-          className="fixed bottom-6 right-6 sm:right-8 px-3 bg-[#19ca5d] hover:bg-[#19ca5d93] shadow-lg flex items-center justify-center text-2xl sm:text-3xl transition-all"
+          className="fixed bottom-6 right-6 sm:right-8 px-4 py-2 bg-[#19ca5d] hover:bg-[#19ca5d93] shadow-lg rounded-lg flex items-center gap-2 font-bold text-sm sm:text-base transition-all"
         >
-          <span className="text-[15px] flex items-center gap-2 font-bold">
-            <MessageSquareMore size={20} />
-            Ask further
-          </span>
+          <MessageSquareMore size={18} />
+          Ask further
         </button>
       )}
 
       {chatOpen && (
-        <div className="fixed bottom-5 right-6 sm:right-8 w-60 sm:w-96 h-96 sm:h-[500px] shadow-2xl rounded-md overflow-hidden z-50">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-8 w-full sm:w-96 h-screen sm:h-[500px] shadow-2xl rounded-none sm:rounded-2xl overflow-hidden z-50">
           <Chatbot onClose={() => setChatOpen(false)} businessData={data} />
         </div>
       )}
