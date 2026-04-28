@@ -90,7 +90,7 @@ function Chatbot({ onClose, businessData }: ChatbotProps) {
           darkmode
             ? "bg-[#3e3e3e] text-white border-b border-gray-500"
             : "bg-[#1ce0af] text-black border-b border-gray-200"
-        } p-3 sm:p-4 rounded-t-2xl flex justify-between items-center`}
+        } p-3 sm:p-4 sm:rounded-t-2xl flex justify-between items-center`}
       >
         <div className="flex items-center gap-1 sm:gap-2 min-w-0">
           <img src={Logo} className="w-5 sm:w-6 flex-shrink-0" />
@@ -108,7 +108,7 @@ function Chatbot({ onClose, businessData }: ChatbotProps) {
         </button>
       </div>
 
-      <div className="flex-1 p-3 sm:p-4 overflow-y-auto flex flex-col gap-2 sm:gap-3">
+      <div className="sm:flex-1 h-[80%] p-3 sm:p-4 overflow-y-auto flex flex-col gap-2 sm:gap-3">
         {messages.map((msg, index) => (
           <div
             key={index}
