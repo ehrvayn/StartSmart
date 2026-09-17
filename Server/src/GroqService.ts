@@ -38,7 +38,7 @@ export const analyzeBusiness = async (
     });
 
     const message = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       max_tokens: 2000,
       messages: [
         {
@@ -120,7 +120,7 @@ export const chatbot = async (
     ];
 
     const message = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       max_tokens: 1000,
       messages,
     });
