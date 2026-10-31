@@ -13,27 +13,18 @@ AI-powered business viability analyzer. Enter your business idea, get instant in
 
 ## Tech Stack
 
-**Frontend:** React, TypeScript, Tailwind, Vite  
-**Backend:** Node.js, Express, TypeScript, Groq API
+**Frontend:** Next.js (App Router), React, TypeScript, Tailwind  
+**Backend:** Next.js API Routes, Groq API
 
 ## Quick Start
 
-**Backend:**
 ```bash
-cd Server
 npm install
-# Create .env with GROQ_API_KEY and PORT=5000
+# Create .env with GROQ_ANALYSIS_API_KEY, GROQ_CHATBOT_API_KEY and PORT=3000
 npm run dev
 ```
 
-**Frontend:**
-```bash
-cd Client
-npm install
-npm run dev
-```
-
-Visit `http://localhost:5173`
+Visit `http://localhost:3000`
 
 ## API
 
@@ -44,7 +35,12 @@ Visit `http://localhost:5173`
 
 Returns analysis with costs, timeline, challenges, legal requirements, and viability score.
 
-**GET** `/health` - Server status
+**POST** `/api/chatbot`
+```json
+{ "businessIdea": "Coffee shop", "context": "...", "conversationHistory": [] }
+```
+
+**GET** `/api/health` - Server status
 
 ## How It Works
 
