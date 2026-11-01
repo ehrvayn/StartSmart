@@ -1,10 +1,18 @@
-# StartSmart
+<h1>
+  <img src="https://res.cloudinary.com/dlvcjwfjm/image/upload/v1793525760/StartSmartLogo.png" alt="InterviewSpark logo" height="48" align="absmiddle">
+  StartSmart
+</h1>
 
 AI-powered business viability analyzer. Enter your business idea, get instant insights on costs, timeline, risks, and legality.
 
+
+**Live:** [View Website](https://startsmartgo.vercel.app)
+
+![StartSmart setup screen](https://res.cloudinary.com/dlvcjwfjm/image/upload/v1793525511/StartSmartSample.png)
+
 ## Features
 
-- AI-powered analysis (Groq LLaMA 3.3)
+- AI-powered analysis (gpt-oss-120b)
 - Startup costs breakdown
 - Implementation timeline
 - Market demand & risk assessment
