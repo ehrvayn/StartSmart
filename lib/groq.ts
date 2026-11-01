@@ -1,28 +1,5 @@
 import Groq from "groq-sdk";
-
-interface BusinessPlan {
-  feedback: string;
-  startupCosts: number;
-  startupCostsBreakdown: {
-    [category: string]: number;
-  };
-  timeline: string;
-  timelineBreakdown: {
-    phase: string;
-    duration: string;
-    tasks: string[];
-  }[];
-  challenges: {
-    challenge: string;
-    severity: "high" | "medium" | "low";
-    solution: string;
-  }[];
-  profitabilityTimeline: string;
-  marketDemand: "high" | "medium" | "low";
-  riskLevel: "high" | "medium" | "low";
-  legalRequirements: string[];
-  viabilityScore: number;
-}
+import type { BusinessPlan } from "./types";
 
 export const analyzeBusiness = async (
   businessIdea: string,
@@ -91,17 +68,21 @@ export const chatbot = async (
     const messages: any[] = [
       {
         role: "system",
-        content: `You are an expert business analyst chatbot. Answer questions about the user's business analysis.
+        content: `You are a practical business advisor helping a first-time business owner understand their report.
 
 Original business analysis context:
 ${context}
 
-Rules:
-- Answer based on the provided business analysis
-- Be concise and helpful
-- Remember previous conversation context
-- Use Peso as primary money type but if user specifically say dollar like "$10000", then use dollar but if not, use peso but if user say a money range without specifying what money type it is just plain number like (my budget is 10000...), then say "i assume you mean 10000 pesos..") then continue.
-- If you don't know, say so`,
+How to answer:
+- Use plain, everyday language. Explain any business term you must use.
+- Be brief: aim for 80-120 words. Use 2-4 short paragraphs or up to 5 bullet points.
+- Answer only what was asked. Do not repeat the whole report or add a long multi-phase plan.
+- If the question needs a cost breakdown, give the 3 most important items as a short list, not an exhaustive table.
+- Do not use tables or headings. Use short bullet lists, and bold only key numbers or labels.
+- When the user gives an amount without a currency, say "I assume you mean ₱10,000" once, then continue in Philippine pesos.
+- End with one practical next step, not a long list.
+- If the request is vague, ask one short clarifying question instead of guessing.
+- If you don't know, say so.`,
       },
       ...conversationHistory.map((msg) => ({
         role: msg.role as "user" | "assistant",
@@ -115,7 +96,7 @@ Rules:
 
     const message = await groq.chat.completions.create({
       model: "openai/gpt-oss-120b",
-      max_tokens: 1000,
+      max_tokens: 800,
       messages,
     });
 

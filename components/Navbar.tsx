@@ -1,48 +1,39 @@
-"use client";
-
-import { useDarkmode } from "../context/Darkmode";
-import { FaMoon } from "react-icons/fa";
-import { FaSun } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
 
 function Navbar() {
-  const { darkmode, setDarkmode } = useDarkmode();
   return (
-    <nav
-      className={`${darkmode ? "bg-[#2e2e2e] border-[#353535]" : "bg-[#1ce0af]"} w-full border-b px-2 sm:px-4 md:px-[300px] py-2 sm:py-3 flex items-center justify-between`}
-    >
-      <div className="flex items-center gap-2">
-        <img src="/StartSmartLogo.png" className="w-8 sm:w-10" />
-        <span
-          className={`${darkmode ? "text-[#1ce0af]" : "text-[#2e2e2e]"} text-base sm:text-lg md:text-xl font-bold`}
+    <header className="sticky top-0 z-40 border-b border-line bg-paper">
+      <div className="container-page flex h-16 items-center justify-between gap-4">
+        <a
+          href="/"
+          aria-label="StartSmart home"
+          className="flex items-center gap-2.5"
         >
-          StartSmart
-        </span>
-      </div>
-      <div className="flex items-center gap-2 sm:gap-3">
-        <span
-          className={`${darkmode ? "text-[#f5f5f5b0]" : "text-[#2e2e2e]"} sm:opacity-100 opacity-0 text-xs sm:text-sm uppercase font-mono font-bold`}
-        >
-          darkmode
-        </span>
-        <button
-          onClick={() => setDarkmode(!darkmode)}
-          aria-label="Toggle Theme"
-          className={`relative w-12 sm:w-14 h-6 sm:h-7 cursor-pointer rounded-full flex items-center px-1 shadow-inner transition-colors ${
-            darkmode ? "bg-zinc-500" : "bg-zinc-200"
-          }`}
-        >
-          <div
-            className={`w-4 sm:w-5 h-4 sm:h-5 rounded-full shadow-md transform flex items-center justify-center text-[9px] sm:text-[11px] transition-transform duration-300 ${
-              darkmode
-                ? "translate-x-6 sm:translate-x-7 bg-zinc-900 text-white"
-                : "translate-x-0 bg-white"
-            }`}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/StartSmartLogo.png" alt="" className="h-8 w-8" />
+          <span className="text-[15px] font-bold tracking-tight">
+            StartSmart
+          </span>
+        </a>
+
+        <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
+          <a
+            href="/#what-you-get"
+            className="text-sm text-muted transition-colors hover:text-ink"
           >
-            {darkmode ? <FaMoon size={15}/> : <FaSun size={15}/>}
-          </div>
-        </button>
+            What you get
+          </a>
+          <a
+            href="/#how-it-works"
+            className="text-sm text-muted transition-colors hover:text-ink"
+          >
+            How it works
+          </a>
+        </nav>
+
+        <ThemeToggle />
       </div>
-    </nav>
+    </header>
   );
 }
 
